@@ -33,22 +33,18 @@ def alta_ticket():
         sector = input("Ingrese el sector: ")
         asunto = input("Ingrese el asunto: ")
         problema = input("Describa el problema: ")
-        
-        
+
         numero_ticket = random.randrange(1000, 9999)
-        
-       
+
         tickets[numero_ticket] = {
             "Nombre": nombre,
             "Sector": sector,
             "Asunto": asunto,
             "Problema": problema
         }
-        
-        
+
         guardar_tickets()
-        
-        
+
         print(f"\nTicket creado exitosamente. Número de ticket: {numero_ticket}")
         print("Detalles del ticket guardado:")
         print(f"Nombre: {nombre}")
@@ -56,11 +52,16 @@ def alta_ticket():
         print(f"Asunto: {asunto}")
         print(f"Problema: {problema}")
         print("\nPor favor, recuerde este número para futuras consultas.\n")
-        
-        
-        continuar = input("¿Desea crear otro ticket? (s/n): ").strip().lower()
-        if continuar != 's':
-            break
+
+        # Repetir la pregunta hasta obtener una respuesta válida
+        while True:
+            continuar = input("¿Desea crear otro ticket? (s/n): ").strip().lower()
+            if continuar == 's':
+                break
+            elif continuar == 'n':
+                return  # Salir de la función si el usuario elige 'n'
+            else:
+                print("Entrada inválida. Por favor, ingrese 's' para sí o 'n' para no.")
 
 def leer_ticket():
     while True:
@@ -77,19 +78,28 @@ def leer_ticket():
                 print("El número de ticket no existe.\n")
         except ValueError:
             print("Debe ingresar un número válido.\n")
-        
-        
-        continuar = input("¿Desea leer otro ticket? (s/n): ").strip().lower()
-        if continuar != 's':
-            break
+
+        # Repetir la pregunta hasta obtener una respuesta válida
+        while True:
+            continuar = input("¿Desea leer otro ticket? (s/n): ").strip().lower()
+            if continuar == 's':
+                break
+            elif continuar == 'n':
+                return  # Salir de la función si el usuario elige 'n'
+            else:
+                print("Entrada inválida. Por favor, ingrese 's' para sí o 'n' para no.")
 
 def salir():
     limpiar_pantalla()
-    confirmacion = input("\n¿Está seguro que desea salir? (s/n): ").strip().lower()
-    if confirmacion == 's':
-        print("¡Gracias por usar el sistema de tickets!")
-        sys.exit()
-
+    while True:
+        confirmacion = input("\n¿Está seguro que desea salir? (s/n): ").strip().lower()
+        if confirmacion == 's':
+            print("¡Gracias por usar el sistema de tickets!")
+            sys.exit()
+        elif confirmacion == 'n':
+            return  # Regresar al menú si el usuario elige 'n'
+        else:
+            print("Entrada inválida. Por favor, ingrese 's' para sí o 'n' para no.")
 
 def menu():
     while True:
@@ -99,8 +109,7 @@ def menu():
         print("1. Generar Nuevo Ticket")
         print("2. Leer Ticket")
         print("3. Salir")
-        
-       
+
         try:
             opcion = int(input("Seleccione una opción: ").strip())
             if opcion == 1:
